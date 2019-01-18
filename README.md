@@ -36,3 +36,41 @@ After the default information is added, the command will prompt for any addition
 * email address used for sign-up
 * security verification questions such as "What's your Mother's maiden name?" or "What high school did you go to?" When completing these questions when setting up the account you should add in random generated answers.
 * anything else that might be helpful to know with this account.
+
+## Creating a new release
+
+When a new version is completed, use goreleaser to create new binaries, push them as a new release to GitHub and finally update the Homebrew repo.
+
+### Install goreleaser
+
+Install goreleaser locally using Homebrew.
+
+```bash
+brew update
+brew install goreleaser
+```
+
+### Create a new version
+
+You will need to create a new version tag and push it to GitHub before you are able to do the release. Use semantic versioning for the new version of `vault-shared-users`
+
+```bash
+git tag -a <tag> -m "Example message"
+git push origin <tag>
+```
+
+Replace `<tag>` with a semantic version like "v0.0.1" or "v1.3.0" including a "v" character at the beginning of the version. You should create a proper message the for the tag.
+
+### Update goreleaser and create the release
+
+Most of the time you should not need to update the goreleaser configuration but if you do, it is located at the root of the repository in the `.goreleaser.yml` file.
+
+To push the release, run the following:
+
+```bash
+goreleaser release
+```
+
+You will also need access to the `dollarshaveclub/homebrew-tap` repo to be able to update the Homebrew formula as well.
+
+You should now be able to see the new version in Homebrew after running an update through `brew`.
